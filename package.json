@@ -1,0 +1,22 @@
+{
+  "name": "literary-garden",
+  "version": "1.0.0",
+  "description": "Reading progress tracker-galvanize project one",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiatomescu/literary-garden.git"
+  },
+  "author": "Tia Tomescu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tiatomescu/literary-garden/issues"
+  },
+  "homepage": "https://github.com/tiatomescu/literary-garden#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}
