@@ -1,0 +1,12 @@
+.pixelify-sans {
+  font-family: "Pixelify Sans", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+html {
+  /* Base styles */
+  font-size: 16px/1.5;
+  font-family: "Pixelify Sans", sans-serif;
+  background-color: #f3ead6;
+}

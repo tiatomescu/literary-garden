@@ -3,34 +3,6 @@
 //Get index of the one I want, display book title, author name, genres, description.
 require("dotenv").config();
 
-/* Variables */
-let mockTitle = 'Onyx';
-let mockAuthor = 'Rebecca Yarros';
-let key = process.env.API_KEY;
-let url = `https://www.googleapis.com/books/v1/volumes?q=${titleSearchTerms(mockTitle)}+${authorSearchTerms(mockAuthor)}&key=${key}`;
-
-/* GET request */
-fetch(url)
-.then(rawResponse => {
-  if(!rawResponse.ok){
-    throw new Error(`code: ${rawResponse.status}, status text: ${rawResponse.statusText}`);
-  }
-  return rawResponse.json();
-})
-.then(jsonifiedResponse => searchResults(jsonifiedResponse))
-.catch(error => console.log(error));
-
-/* Book class */
-// Not super sure if I want to keep this in THIS file but we shall see
-class Book {
-  constructor(title, author, genres, description){
-    this.title = title;
-    this.author = author;
-    this.genres = genres;
-    this.description = description;
-  }
-};
-
 /* Helper functions */
 let titleSearchTerms = (inputTitle) => {
   let titleArr = inputTitle.toLowerCase().split(" ");
@@ -61,6 +33,35 @@ let searchResults = (resultObj) => {
     return new Book(title, author, genres, description);
   });
 };
+
+/* Variables */
+let mockTitle = 'Onyx';
+let mockAuthor = 'Rebecca Yarros';
+let key = process.env.API_KEY;
+let url = `https://www.googleapis.com/books/v1/volumes?q=${titleSearchTerms(mockTitle)}+${authorSearchTerms(mockAuthor)}&key=${key}`;
+
+/* GET request */
+fetch(url)
+.then(rawResponse => {
+  if(!rawResponse.ok){
+    throw new Error(`code: ${rawResponse.status}, status text: ${rawResponse.statusText}`);
+  }
+  return rawResponse.json();
+})
+.then(jsonifiedResponse => searchResults(jsonifiedResponse))
+.catch(error => console.log(error));
+
+/* Book class */
+// Not super sure if I want to keep this in THIS file but we shall see
+class Book {
+  constructor(title, author, genres, description){
+    this.title = title;
+    this.author = author;
+    this.genres = genres;
+    this.description = description;
+  }
+};
+
 
 /* a Very Long mocked response */
 // let mockJsonifiedResponse = {
