@@ -4,9 +4,27 @@
   font-weight: 400;
   font-style: normal;
 }
+
 html {
   /* Base styles */
   font-size: 16px/1.5;
   font-family: "Pixelify Sans", sans-serif;
   background-color: #f3ead6;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.garden {
+  grid-column: 1;
+}
+
+.search-bar {
+  grid-column: 2;
+}
+
+.details-container {
+  grid-column: 3;
 }

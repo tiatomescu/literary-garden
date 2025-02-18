@@ -14,7 +14,7 @@
   <header>Your 2025 Literary Garden</header>
   <div class="main">
     <!---Garden--->
-    <div class="plot">
+    <div class="garden">
       <div class="subplot">
         <button id="plot-btn">+</button>
         <button id="plot-btn">+</button>
@@ -40,11 +40,45 @@
         <button id="plot-btn">+</button>
       </div>
     </div>
+
+    <div class="search-bar">
+      <!--Search Bar-->
+      <form id="user-input">
+        <div class="author-input">
+          <label for="author">Author's name: </label>
+          <input type="text" id="author" required>
+        </div>
+        <div class="title-input">
+          <label for="title">Book title: </label>
+          <input type="text" id="title" required>
+        </div>
+        <input type="submit">
+      </form>
+      <!--Search Results-->
+      <div id="scroll-search-results">
+        <!--ul of Results-->
+      </div>
+    </div>
+
+    <!--Book Details-->
+    <div class="details-container">
+      <p id="title-output">Book title<br></p>
+      <p id="author-output"><br>Book Author<br></p>
+      <p id="genre-output"><br>Genre<br></p>
+      <p id="description-output"><br>Details<br></p>
+      <p>Status</p>
+      <select name="status">
+        <option value="Started">Started</option>
+        <option value="Completed">Completed</option>
+      </select>
+      <button id="save-btn">Save</button>
+    </div>
+
   </div>
   <!---Footer--->
   <footer>
     <p>Made by <a class="url" href="https://github.com/tiatomescu/to-do-list">@tiatomescu</a> <3</p>
   </footer>
 </body>
-<script type="module" src="/main.js"></script>
+<script src="/main.js"></script>
 </html>
