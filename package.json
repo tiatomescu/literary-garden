@@ -2,7 +2,7 @@
   "name": "literary-garden",
   "version": "1.0.0",
   "description": "Reading progress tracker-galvanize project one",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

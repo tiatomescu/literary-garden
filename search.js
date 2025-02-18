@@ -1,7 +1,4 @@
-//First project: grab API data from Google Books API
-// There MUST be input values for title and author */
-//Get index of the one I want, display book title, author name, genres, description.
-require("dotenv").config();
+require('dotenv').config();
 
 /* Helper functions */
 let titleSearchTerms = (inputTitle) => {
@@ -27,29 +24,56 @@ let authorSearchTerms = (inputAuthor) => {
 let searchResults = (resultObj) => {
   return resultObj.items.map((book) => {
     let title = book.volumeInfo.title;
-    let author = book.volumeInfo.authors.join(', ');
+    let author = book.volumeInfo.authors == undefined ? undefined : book.volumeInfo.authors.join(', ');
     let genres = book.volumeInfo.categories == undefined? undefined : book.volumeInfo.categories.join(', ');
     let description = book.volumeInfo.description;
     return new Book(title, author, genres, description);
   });
 };
 
-/* Variables */
-let mockTitle = 'Onyx';
-let mockAuthor = 'Rebecca Yarros';
-let key = process.env.API_KEY;
-let url = `https://www.googleapis.com/books/v1/volumes?q=${titleSearchTerms(mockTitle)}+${authorSearchTerms(mockAuthor)}&key=${key}`;
+let displayResults = (bookObjArray) => {
+  let bookList = '';
+  bookObjArray.forEach((elm) => {
+    let description = elm.description == undefined ? undefined : `${elm.description.slice(0, 100)}...`
+    bookList +=
+    `<ul>
+      <p>Title: ${elm.title}<br>Author: ${elm.author}<br>Description: ${description}<br></p>
+      <button> Select </button>
+    </ul>`;
+  })
+  displayDiv.innerHTML = bookList;
+}
 
-/* GET request */
-fetch(url)
-.then(rawResponse => {
-  if(!rawResponse.ok){
-    throw new Error(`code: ${rawResponse.status}, status text: ${rawResponse.statusText}`);
-  }
-  return rawResponse.json();
-})
-.then(jsonifiedResponse => searchResults(jsonifiedResponse))
-.catch(error => console.log(error));
+/* Variables */
+let author = '';
+let title = '';
+let key = process.env.API_KEY;
+let url = '';
+
+let userSearch = document.getElementById('user-input');
+let displayDiv = document.getElementById('scroll-search-results');
+
+/* DOM manipulation */
+let getSearchElements = (input) => {
+  author = document.getElementById('author').value;
+  title = document.getElementById('title').value;
+  url =  `https://www.googleapis.com/books/v1/volumes?q=${titleSearchTerms(title)}+${authorSearchTerms(author)}&key=${key}`;
+};
+
+userSearch.addEventListener('submit', (event) => {
+  event.preventDefault();
+  getSearchElements(event);
+  /* GET request */
+  fetch(url)
+  .then(rawResponse => {
+    if(!rawResponse.ok){
+      throw new Error(`code: ${rawResponse.status}, status text: ${rawResponse.statusText}`);
+    }
+    return rawResponse.json();
+  })
+  .then(jsonifiedResponse => displayResults(searchResults(jsonifiedResponse)))
+  .catch(error => console.log(error));
+});
 
 /* Book class */
 // Not super sure if I want to keep this in THIS file but we shall see
@@ -61,7 +85,6 @@ class Book {
     this.description = description;
   }
 };
-
 
 /* a Very Long mocked response */
 // let mockJsonifiedResponse = {
@@ -858,4 +881,6 @@ class Book {
 //     }
 //   ]
 // }
+
+
 

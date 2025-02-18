@@ -13,23 +13,29 @@
   <!---Heading Sign--->
   <header>Your 2025 Literary Garden</header>
   <div class="main">
-    <!--Search Bar-->
-    <form class="brown-container">
-      <div class="author-input">
-        <label for="author">Author's name: </label>
-        <input type="text" id="author" required>
+    <div class="brown-container">
+      <!--Search Bar-->
+      <form id="user-input">
+        <div class="author-input">
+          <label for="author">Author's name: </label>
+          <input type="text" id="author" required>
+        </div>
+        <div class="title-input">
+          <label for="title">Book title: </label>
+          <input type="text" id="title" required>
+        </div>
+        <input type="submit">
+      </form>
+      <!--Search Results-->
+      <div id="scroll-search-results">
+        <!--ul of Results-->
       </div>
-      <div class="book-input">
-        <label for="book">Book title: </label>
-        <input type="text" id="book" required>
-      </div>
-      <input type="submit">
-    </form>
+    </div>
   </div>
   <!---Footer--->
   <footer>
     <p>Made by <a class="url" href="https://github.com/tiatomescu/to-do-list">@tiatomescu</a> <3</p>
   </footer>
 </body>
-<script src="/main.js"></script>
+<script src="/search.js"></script>
 </html>
