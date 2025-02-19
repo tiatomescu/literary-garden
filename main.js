@@ -12,13 +12,17 @@ let usersBooks = [];
 
 /* Book class */
 class Book {
-  constructor(title, author, genres, description, status, plot){
+  constructor(title, author, genres, description, status, plot, rating){
     this.title = title;
     this.author = author;
     this.genres = genres;
     this.description = description;
     this.status = status;
     this.plot = plot;
+    this.rating = 0;
+  }
+  setRating(num) {
+    this.rating = num;
   }
 };
 
@@ -34,6 +38,16 @@ let displayTitle = document.getElementById('title-output');
 let displayAuthor = document.getElementById('author-output');
 let displayGenre = document.getElementById('genre-output');
 let displayDescription = document.getElementById('description-output');
+let sign = document.getElementById('sign');
+let stars = document.querySelectorAll('.stars');
+
+// let user = localStorage.getItem('userName') ||  prompt('Welcome to your literary garden! What name should we use for this plot?', 'Your');
+// if (user == null || user == "") {
+//   alert(`I didn't quite get that!`);
+// } else {
+//   alert(`Welcome, ${user}!`);
+//   sign.innerHTML = `${user}'s 2025 Literary Garden`;
+// }
 
 plotButtons.forEach((btn, index) => {
   btn.addEventListener('click', (event) => {
@@ -47,12 +61,10 @@ plotButtons.forEach((btn, index) => {
         }
       }
     }
-
   })
 });
 
 /* Search Section */
-
 let getSearchElements = (input) => {
   author = document.getElementById('author').value;
   title = document.getElementById('title').value;
@@ -72,7 +84,10 @@ userSearch.addEventListener('submit', (event) => {
     return rawResponse.json();
   })
   .then(jsonifiedResponse => displayResults(searchResults(jsonifiedResponse)))
-  .catch(error => console.log(error));
+  .catch(error => {
+    alert(`Please check author and title, and search again!`);
+    console.log(error);
+  });
 });
 
 /* Search helper functions */
@@ -135,12 +150,19 @@ let getSelectBtnInfo = () => {
 /* Details section */
 let displayDetails = (index) => {
   let displayBook = usersBooks[index];
-
+  console.log(`This is the display book: ${displayBook}`);
   if (usersBooks.length > 0) {
     displayTitle.innerHTML = displayBook.title;
     displayAuthor.innerHTML = displayBook.author;
     displayGenre.innerHTML = displayBook.genre;
     displayDescription.innerHTML = displayBook.description;
+    stars.forEach((star, index) => {
+      if(index < displayBook.rating) {
+        star.id = 'fill';
+      } else if(index >= displayBook.rating){
+        star.id = '';
+      }
+    })
   }
 }
 
@@ -172,3 +194,42 @@ let displayPlot = () => {
     book.status === 'Started' ? plotButtons[book.plot].innerHTML = 'sprout' : plotButtons[book.plot].innerHTML = 'flower'
   })
 }
+
+/* Save to local storage (refresh-proof) */
+addEventListener('beforeunload', () => {
+  localStorage.setItem('usersBooks', JSON.stringify(usersBooks));
+  localStorage.setItem('userName', user);
+});
+
+/* Get from local storage (refresh-proof) */
+if(localStorage.getItem('usersBooks')){
+  const storedBooks = JSON.parse(localStorage.getItem('usersBooks'));
+  usersBooks = storedBooks.map((book) => new Book(book.title, book.author, book.genres, book.description, book.status, book.plot, book.rating));
+  let ratings = [];
+  storedBooks.forEach((storedBook)=>{
+    ratings.push(storedBook.rating);
+  })
+  usersBooks.forEach((userBook, index) => {
+    userBook.setRating(ratings[index]);
+  })
+  displayPlot();
+}
+
+/* Star colors */
+stars.forEach((star, index) => {
+  star.addEventListener('click', (target) => {
+    let rating = index + 1;
+    for(let book of usersBooks){
+      if(book.plot == clickedPlot){
+        book.rating = rating;
+        break;
+      }
+    };
+    for(let book of usersBooks){
+      if(book.plot == clickedPlot){
+        displayDetails(usersBooks.indexOf(book));
+        break;
+      }
+    }
+  });
+});

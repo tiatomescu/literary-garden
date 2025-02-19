@@ -28,3 +28,19 @@ html {
 .details-container {
   grid-column: 3;
 }
+
+#plot-btn:focus {
+  border: solid 2px #97332c;
+  border-radius: 0.25rem;
+}
+
+.star-list {
+  display: flex;
+  flex-direction: row;
+  color: #edd49e;
+  cursor: pointer;
+}
+
+#fill {
+  color: #eaa239;
+}
