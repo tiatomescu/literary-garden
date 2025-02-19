@@ -19,6 +19,7 @@ html {
 
 .garden {
   grid-column: 1;
+  background-color: #d2c98a;
 }
 
 .search-bar {
@@ -27,6 +28,24 @@ html {
 
 .details-container {
   grid-column: 3;
+}
+
+#plot-btn {
+  width: 50px;
+  height: 50px;
+  background-color: #b57a44;
+  border: 0px;
+  border-radius: 0.25rem;
+}
+
+.flower#plot-btn {
+  background-image: url('./images/flower-1.PNG');
+  background-size: contain;
+}
+
+.sprout#plot-btn {
+  background-image: url('./images/sprout.PNG');
+  background-size: contain;
 }
 
 #plot-btn:focus {

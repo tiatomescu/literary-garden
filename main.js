@@ -1,4 +1,3 @@
-
 //require('dotenv').config();
 
 /* Variables */
@@ -6,7 +5,7 @@ let author = '';
 let title = '';
 //let key = process.env.API_KEY;
 let url = '';
-let clickedPlot = null;
+let clickedPlot = 0;
 let bookSearchResults = [];
 let usersBooks = [];
 
@@ -41,18 +40,17 @@ let displayDescription = document.getElementById('description-output');
 let sign = document.getElementById('sign');
 let stars = document.querySelectorAll('.stars');
 
-// let user = localStorage.getItem('userName') ||  prompt('Welcome to your literary garden! What name should we use for this plot?', 'Your');
-// if (user == null || user == "") {
-//   alert(`I didn't quite get that!`);
-// } else {
-//   alert(`Welcome, ${user}!`);
-//   sign.innerHTML = `${user}'s 2025 Literary Garden`;
-// }
+let user = localStorage.getItem('userName') ||  prompt('Welcome to your literary garden! What name should we use for this plot?', 'Your');
+if (user == null || user == "") {
+  alert(`I didn't quite get that!`);
+} else {
+  alert(`Welcome, ${user}!`);
+  sign.innerHTML = `${user}'s 2025 Literary Garden`;
+}
 
 plotButtons.forEach((btn, index) => {
   btn.addEventListener('click', (event) => {
     clickedPlot = index;
-    console.log(clickedPlot);
     if(btn.className == 'sprout' || btn.className == 'flower') {
       for(let book of usersBooks){
         if(book.plot == index){
@@ -150,7 +148,6 @@ let getSelectBtnInfo = () => {
 /* Details section */
 let displayDetails = (index) => {
   let displayBook = usersBooks[index];
-  console.log(`This is the display book: ${displayBook}`);
   if (usersBooks.length > 0) {
     displayTitle.innerHTML = displayBook.title;
     displayAuthor.innerHTML = displayBook.author;
@@ -191,7 +188,7 @@ deleteButton.addEventListener('click', (target) => {
 let displayPlot = () => {
   usersBooks.forEach((book) => {
     book.status === 'Started' ? plotButtons[book.plot].className = 'sprout' : plotButtons[book.plot].className = 'flower'
-    book.status === 'Started' ? plotButtons[book.plot].innerHTML = 'sprout' : plotButtons[book.plot].innerHTML = 'flower'
+    book.status === 'Started' ? plotButtons[book.plot].innerHTML = '' : plotButtons[book.plot].innerHTML = ''
   })
 }
 
