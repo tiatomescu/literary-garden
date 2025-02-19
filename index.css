@@ -66,8 +66,9 @@ html {
 }
 
 #author, #title, #status {
+  box-sizing: border-box;
   font-family: inherit;
-  width: 30vh;
+  width: 100%;
   border: none;
   border-radius: 0.5rem;
   padding: 5px;
@@ -78,7 +79,6 @@ html {
   padding: 10px;
   border-radius: 1rem;
   color: #b57a44;
-  overflow: scroll;
 }
 
 .author-input {
