@@ -27,11 +27,18 @@ let plotButtons = document.querySelectorAll('#plot-btn');
 let userSearch = document.getElementById('user-input');
 let selectBtn = document.querySelectorAll('#select');
 let displayDiv = document.getElementById('scroll-search-results');
+let statusForm = document.getElementById('status');
+let saveButton = document.getElementById('save-btn');
+let deleteButton = document.getElementById('delete-btn');
+let displayTitle = document.getElementById('title-output');
+let displayAuthor = document.getElementById('author-output');
+let displayGenre = document.getElementById('genre-output');
+let displayDescription = document.getElementById('description-output');
 
 plotButtons.forEach((btn, index) => {
   btn.addEventListener('click', (event) => {
     clickedPlot = index;
-
+    console.log(clickedPlot);
     if(btn.className == 'sprout' || btn.className == 'flower') {
       for(let book of usersBooks){
         if(book.plot == index){
@@ -128,11 +135,6 @@ let getSelectBtnInfo = () => {
 /* Details section */
 let displayDetails = (index) => {
   let displayBook = usersBooks[index];
-  let displayTitle = document.getElementById('title-output');
-  let displayAuthor = document.getElementById('author-output');
-  let displayGenre = document.getElementById('genre-output');
-  let displayDescription = document.getElementById('description-output');
-  let saveButton = document.getElementById('save-btn');
 
   if (usersBooks.length > 0) {
     displayTitle.innerHTML = displayBook.title;
@@ -140,15 +142,33 @@ let displayDetails = (index) => {
     displayGenre.innerHTML = displayBook.genre;
     displayDescription.innerHTML = displayBook.description;
   }
-
-  saveButton.addEventListener('click', (target) => {
-    displayPlot();
-  });
 }
+
+saveButton.addEventListener('click', (target) => {
+  for(let book of usersBooks){
+    if(book.plot == clickedPlot){
+      book.status = statusForm.value;
+      break;
+    }
+  }
+  displayPlot();
+});
+
+deleteButton.addEventListener('click', (target) => {
+  for(let i=0; i < usersBooks.length; i++){
+    if(usersBooks[i].plot == clickedPlot){
+      usersBooks.splice(i, 1);
+      plotButtons[clickedPlot].className = '';
+      plotButtons[clickedPlot].innerHTML = '+';
+      break;
+    }
+  }
+  displayPlot();
+});
 
 let displayPlot = () => {
   usersBooks.forEach((book) => {
-    book.status == 'Started' ? plotButtons[clickedPlot].className = 'sprout' : plotButtons[clickedPlot].className = 'flower'
-    book.status == 'Started' ? plotButtons[clickedPlot].innerHTML = 'sprout' : plotButtons[clickedPlot].innerHTML = 'flower'
+    book.status === 'Started' ? plotButtons[book.plot].className = 'sprout' : plotButtons[book.plot].className = 'flower'
+    book.status === 'Started' ? plotButtons[book.plot].innerHTML = 'sprout' : plotButtons[book.plot].innerHTML = 'flower'
   })
 }
