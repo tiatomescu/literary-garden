@@ -12,14 +12,36 @@ html {
   background-color: #f3ead6;
 }
 
+#sign {
+  justify-self: center;
+  align-self: center;
+  justify-content: center;
+  align-content: center;
+  height: 3rem;
+  background-color: #b57a44;
+  border: solid 3px #97332c;
+  border-radius: 0.5rem;
+  color: #f3ead6;
+  padding: 10px 100px 10px 100px;
+  font-size: xx-large;
+}
+
 .main {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  height: 70vh;
+  background-color: #d2c98a;
 }
 
 .garden {
+  display: flex;
+  align-self: center;
   grid-column: 1;
-  background-color: #d2c98a;
+  background-color: #edd49e;
+  border: solid 3px #97332c;
+  border-radius: 2rem;
+  padding: 30px;
+  margin: 50px;
 }
 
 .search-bar {
@@ -30,36 +52,121 @@ html {
   grid-column: 3;
 }
 
+.search-bar, .details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #edd49e;
+  border: solid 3px #97332c;
+  color: #b57a44;
+  border-radius: 2rem;
+  contain: strict;
+  padding: 30px;
+  margin: 50px;
+}
+
+#author, #title, #status {
+  font-family: inherit;
+  width: 400px;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 5px;
+}
+
+#user-input, #status-box {
+  background-color: #f3ead6;
+  padding: 10px;
+  border-radius: 1rem;
+  color: #b57a44;
+}
+
+.author-input {
+  margin: 8px;
+}
+
+.title-input {
+  margin: 8px;
+}
+
+#submit-btn, #select, #save-btn, #delete-btn {
+  font-family: inherit;
+  color: #97332c;
+  background-color: #edd49e;
+  border: solid 2px #97332c;
+  border-radius: 1rem;
+  margin: 5px;
+}
+
+#scroll-search-results, #details-box {
+  height: 40cqh;
+  background-color: #f3ead6;
+  color: #b57a44;
+  padding: 5px;
+  border-radius: 1rem;
+  overflow: scroll;
+}
+
+#details-box {
+  display: flex;
+  flex-direction: column;
+}
+
 #plot-btn {
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
   background-color: #b57a44;
   border: 0px;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
+  color: #f3ead6;
+  margin: 10px;
+  font-size: larger;
 }
 
 .flower#plot-btn {
   background-image: url('./images/flower-1.PNG');
-  background-size: contain;
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: bottom 10px right 5px;
 }
 
 .sprout#plot-btn {
   background-image: url('./images/sprout.PNG');
-  background-size: contain;
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: right 20px top 20px;
 }
 
 #plot-btn:focus {
   border: solid 2px #97332c;
-  border-radius: 0.25rem;
 }
 
 .star-list {
   display: flex;
   flex-direction: row;
+  align-self: center;
   color: #edd49e;
   cursor: pointer;
+  font-size: x-large;
 }
 
-#fill {
-  color: #eaa239;
+#author-output, #title-output {
+  font-size: larger;
+  color: #97332c;
 }
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0px 20px 0px;
+  background-color: #d2c98a;
+  color: #f3ead6;
+}
+
+a:visited{
+  color: #f3ead6;
+}
+
+a:hover{
+  color: #97332c;
+}
+
