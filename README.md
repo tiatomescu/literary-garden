@@ -31,3 +31,7 @@ This app uses Google's Books API. Creating a [Google API key](https://console.cl
 
 ## WireFrame
 [Link to Notion WireFrame](https://poised-singer-cab.notion.site/Wireframe-1993d40b293280f59906d175be1395a9?pvs=4)
+
+## Audio License
+[Link to Audio Source](https://freesound.org/people/mikemunkie/sounds/66878/)
+click1.wav by mikemunkie -- [https://freesound.org/s/66878/](https://freesound.org/s/66878/) -- License: Creative Commons 0

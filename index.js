@@ -8,6 +8,22 @@ let url = '';
 let clickedPlot = 0;
 let bookSearchResults = [];
 let usersBooks = [];
+  //audio
+let clickAudio = new Audio('./audio/retro-click.mp3');
+  //Document queries
+let plotButtons = document.querySelectorAll('#plot-btn');
+let userSearch = document.getElementById('user-input');
+let selectBtn = document.querySelectorAll('#select');
+let displayDiv = document.getElementById('scroll-search-results');
+let statusForm = document.getElementById('status');
+let saveButton = document.getElementById('save-btn');
+let deleteButton = document.getElementById('delete-btn');
+let displayTitle = document.getElementById('title-output');
+let displayAuthor = document.getElementById('author-output');
+let displayGenre = document.getElementById('genre-output');
+let displayDescription = document.getElementById('description-output');
+let sign = document.getElementById('sign');
+let stars = document.querySelectorAll('.stars');
 
 /* Book class */
 class Book {
@@ -25,21 +41,6 @@ class Book {
   }
 };
 
-/* DOM queries */
-let plotButtons = document.querySelectorAll('#plot-btn');
-let userSearch = document.getElementById('user-input');
-let selectBtn = document.querySelectorAll('#select');
-let displayDiv = document.getElementById('scroll-search-results');
-let statusForm = document.getElementById('status');
-let saveButton = document.getElementById('save-btn');
-let deleteButton = document.getElementById('delete-btn');
-let displayTitle = document.getElementById('title-output');
-let displayAuthor = document.getElementById('author-output');
-let displayGenre = document.getElementById('genre-output');
-let displayDescription = document.getElementById('description-output');
-let sign = document.getElementById('sign');
-let stars = document.querySelectorAll('.stars');
-
 /* Initial welcome! */
 let user = localStorage.getItem('userName') ||  prompt('Welcome to your literary garden! What name should we use for this plot?', 'Your');
 if (user == null || user == "") {
@@ -53,6 +54,7 @@ if (user == null || user == "") {
   //User selects empty plot the book will be planted in, or pulls up details for plots with plants already
 plotButtons.forEach((btn, index) => {
   btn.addEventListener('click', (event) => {
+    clickAudio.play();
     clickedPlot = index;
     //If plot is populated already, pull up details!
     if(btn.className == 'sprout' || btn.className == 'flower') {
@@ -77,6 +79,7 @@ let getSearchElements = (input) => {
   //API GET request on form submission
 userSearch.addEventListener('submit', (event) => {
   event.preventDefault();
+  clickAudio.play();
   getSearchElements(event);
   fetch(url)
   .then(rawResponse => {
@@ -144,6 +147,7 @@ let getSelectBtnInfo = () => {
   selectBtn = document.querySelectorAll('#select');
   selectBtn.forEach((btn, index) => {
     btn.addEventListener('click', () => {
+        clickAudio.play();
         let selectedBook = bookSearchResults[index];
         usersBooks.push(new Book(selectedBook.title, selectedBook.author, selectedBook.genres, selectedBook.description, 'Started', clickedPlot));
         displayDetails(usersBooks.length - 1);
@@ -171,6 +175,7 @@ let displayDetails = (index) => {
 }
   //Upon save, adds selected reading status to currently displayed book instance
 saveButton.addEventListener('click', (target) => {
+  clickAudio.play();
   for(let book of usersBooks){
     if(book.plot == clickedPlot){
       book.status = statusForm.value;
@@ -182,6 +187,7 @@ saveButton.addEventListener('click', (target) => {
 
   //Upon deletion, removes displayed book instance from user's book list
 deleteButton.addEventListener('click', (target) => {
+  clickAudio.play();
   for(let i=0; i < usersBooks.length; i++){
     if(usersBooks[i].plot == clickedPlot){
       usersBooks.splice(i, 1);
@@ -224,6 +230,7 @@ if(localStorage.getItem('usersBooks')){
 /* Star colors */
 stars.forEach((star, index) => {
   star.addEventListener('click', (target) => {
+    clickAudio.play();
     let rating = index + 1;
     for(let book of usersBooks){
       if(book.plot == clickedPlot){
