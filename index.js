@@ -1,6 +1,6 @@
 //require('dotenv').config();
 
-/* Variables */
+/* Global variables */
 let author = '';
 let title = '';
 //let key = process.env.API_KEY;
@@ -40,6 +40,7 @@ let displayDescription = document.getElementById('description-output');
 let sign = document.getElementById('sign');
 let stars = document.querySelectorAll('.stars');
 
+/* Initial welcome! */
 let user = localStorage.getItem('userName') ||  prompt('Welcome to your literary garden! What name should we use for this plot?', 'Your');
 if (user == null || user == "") {
   alert(`I didn't quite get that!`);
@@ -48,9 +49,12 @@ if (user == null || user == "") {
   sign.innerHTML = `${user}'s 2025 Literary Garden`;
 }
 
+/* Garden plot */
+  //User selects empty plot the book will be planted in, or pulls up details for plots with plants already
 plotButtons.forEach((btn, index) => {
   btn.addEventListener('click', (event) => {
     clickedPlot = index;
+    //If plot is populated already, pull up details!
     if(btn.className == 'sprout' || btn.className == 'flower') {
       for(let book of usersBooks){
         if(book.plot == index){
@@ -63,17 +67,17 @@ plotButtons.forEach((btn, index) => {
 });
 
 /* Search Section */
+  //URL generation for search
 let getSearchElements = (input) => {
   author = document.getElementById('author').value;
   title = document.getElementById('title').value;
   url =  `https://www.googleapis.com/books/v1/volumes?q=${titleSearchTerms(title)}+${authorSearchTerms(author)}&key=${key}`;
 };
 
-/* Capture form information on submission */
+  //API GET request on form submission
 userSearch.addEventListener('submit', (event) => {
   event.preventDefault();
   getSearchElements(event);
-  /* GET request */
   fetch(url)
   .then(rawResponse => {
     if(!rawResponse.ok){
@@ -91,7 +95,7 @@ userSearch.addEventListener('submit', (event) => {
 /* Search helper functions */
 let titleSearchTerms = (inputTitle) => {
   let titleArr = inputTitle.toLowerCase().split(" ");
-  //Remove common first word
+  //Removes common first words
   let commonFirstWords = [
     'it',    'once', 'in', 'the',   'a',    'when','on',
     'as',   'call', 'there', 'she',  'he', 'this',  'we',
@@ -105,10 +109,11 @@ let titleSearchTerms = (inputTitle) => {
 
 let authorSearchTerms = (inputAuthor) => {
   let authorKeyWords = inputAuthor.toLowerCase().split(" ");
-  //convert author keywords into url friendly format
+  //converts author keywords into url friendly format
   return 'inauthor:' + authorKeyWords.reduce((final, elm) => final = final + '+' + elm);
 };
 
+  //Converts API GET request results into local Book instances
 let searchResults = (resultObj) => {
   return resultObj.items.map((book) => {
     let title = book.volumeInfo.title;
@@ -119,21 +124,22 @@ let searchResults = (resultObj) => {
   });
 };
 
+  //Displays books in search box
 let displayResults = (bookObjArray) => {
   bookSearchResults = bookObjArray;
   let bookList = '';
   bookObjArray.forEach((elm) => {
     let description = elm.description == undefined ? undefined : `${elm.description.slice(0, 100)}...`
     bookList +=
-    `<ul>
+    `<span>
       <p>Title: ${elm.title}<br>Author: ${elm.author}<br>Description: ${description}<br></p>
       <button id="select"> Select </button>
-    </ul>`;
+    </span>`;
   })
   displayDiv.innerHTML = bookList;
   getSelectBtnInfo();
 }
-
+  //Adds selected book from search box into user's books
 let getSelectBtnInfo = () => {
   selectBtn = document.querySelectorAll('#select');
   selectBtn.forEach((btn, index) => {
@@ -146,6 +152,7 @@ let getSelectBtnInfo = () => {
 }
 
 /* Details section */
+  //Displays books and stars in details box
 let displayDetails = (index) => {
   let displayBook = usersBooks[index];
   if (usersBooks.length > 0) {
@@ -162,7 +169,7 @@ let displayDetails = (index) => {
     })
   }
 }
-
+  //Upon save, adds selected reading status to currently displayed book instance
 saveButton.addEventListener('click', (target) => {
   for(let book of usersBooks){
     if(book.plot == clickedPlot){
@@ -173,6 +180,7 @@ saveButton.addEventListener('click', (target) => {
   displayPlot();
 });
 
+  //Upon deletion, removes displayed book instance from user's book list
 deleteButton.addEventListener('click', (target) => {
   for(let i=0; i < usersBooks.length; i++){
     if(usersBooks[i].plot == clickedPlot){
@@ -185,20 +193,21 @@ deleteButton.addEventListener('click', (target) => {
   displayPlot();
 });
 
+//Displays flowers and sprouts! (On the garden plot)
 let displayPlot = () => {
   usersBooks.forEach((book) => {
     book.status === 'Started' ? plotButtons[book.plot].className = 'sprout' : plotButtons[book.plot].className = 'flower'
     book.status === 'Started' ? plotButtons[book.plot].innerHTML = '' : plotButtons[book.plot].innerHTML = ''
   })
 }
-
-/* Save to local storage (refresh-proof) */
+/* Local storage */
+  //Save to local storage (refresh-proof)
 addEventListener('beforeunload', () => {
   localStorage.setItem('usersBooks', JSON.stringify(usersBooks));
   localStorage.setItem('userName', user);
 });
 
-/* Get from local storage (refresh-proof) */
+  //Get from local storage (refresh-proof)
 if(localStorage.getItem('usersBooks')){
   const storedBooks = JSON.parse(localStorage.getItem('usersBooks'));
   usersBooks = storedBooks.map((book) => new Book(book.title, book.author, book.genres, book.description, book.status, book.plot, book.rating));
