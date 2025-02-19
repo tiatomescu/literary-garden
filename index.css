@@ -67,7 +67,7 @@ html {
 
 #author, #title, #status {
   font-family: inherit;
-  width: 400px;
+  width: 30vh;
   border: none;
   border-radius: 0.5rem;
   padding: 5px;
@@ -78,6 +78,7 @@ html {
   padding: 10px;
   border-radius: 1rem;
   color: #b57a44;
+  overflow: scroll;
 }
 
 .author-input {
@@ -152,6 +153,10 @@ html {
 #author-output, #title-output {
   font-size: larger;
   color: #97332c;
+}
+
+#fill {
+  color: #eaa239;
 }
 
 footer {
