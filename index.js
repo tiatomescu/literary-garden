@@ -1,9 +1,7 @@
-//require('dotenv').config();
-
 /* Global variables */
 let author = '';
 let title = '';
-//let key = process.env.API_KEY;
+let key = 'yourGoogleAPIKey';
 let url = '';
 let clickedPlot = 0;
 let bookSearchResults = [];

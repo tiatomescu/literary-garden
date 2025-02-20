@@ -7,7 +7,7 @@ An interactive web app that utilizes a flower garden plot, the Google Books API,
 Tracking yearly reading progress can be boring and tedious. This web app allows users to create a personalized "literary garden” to track their reading journey by planting flower plots. Each plot will link to a book details page, where the Google Books API will be used to fill in details, and users can leave a star and text review. This app offers a fun, visual way to track reading progress and reflection while simplifying data entry.
 
 ## API Key
-This app uses Google's Books API. Creating a [Google API key](https://console.cloud.google.com/apis) key is required to run this web app. After creating a key, enable the [Books API](https://console.cloud.google.com/marketplace/product/google/books.googleapis.com). Users will then need to create a [dotenv](https://www.npmjs.com/package/dotenv) file, and add an API key to the file: `API_KEY = 'stringOfYourGoogleAPIkey'`.
+This app uses Google's Books API. Creating a [Google API key](https://console.cloud.google.com/apis) key is required to run this web app. After creating a key, enable the [Books API](https://console.cloud.google.com/marketplace/product/google/books.googleapis.com). Users will then need to add their API key (as a string) to the file: 'index.js' under global variables: let key = 'yourGoogleAPIKey';
 
 ## Minimum Viable Product (MVP)
 - Uses personalized garden plot visualization to track reading progress.
